@@ -1,0 +1,60 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./styles/style.css">
+
+    <title>Homework 4</title>
+</head>
+
+<body>
+    
+    <div class="space"></div>
+
+    <div id="intro-block" class="text-center pt-5">
+        <h1 class="title fade-in-up">Rick and Morty</h1>
+        <h2 class="h2-title fade-in-up">Character App</h2>
+        <div class="flex justify-center items-center mt-5 fade-in-up">
+            <img src="./img/portal.png" class="w-40 p-5 portal-animate">
+            <button id="display-btn" class="p-2 blue-btn m-5">
+                <i class="fa-solid fa-arrow-left-long pe-2"></i>Let's go, in and out
+            </button>
+        </div>
+    </div>
+
+    <div id="app" class="py-2 px-5"></div>
+
+    <dialog id="dialog" class="fixed bg-black backdrop:bg-black/70 p-2 rounded-lg fade-in-up">
+        <div class="flex min-h-full items-center justify-center p-2">
+            <div class="relative z-10 rounded-lg shadow-xl max-w-lg w-full">
+            <div class="h-9 w-100">
+                <button id="close-dialog"
+                    class="absolute top-1 right-3 pb-2 text-white hover:text-green-400 transition duration-300">
+                    <i class="fa-solid fa-xmark text-3xl"></i>
+                </button>
+            </div>
+            <div class="flex gap-3">
+                <img id="dialog-image" class="w-70 rounded-lg m-1" />
+
+                <div class="p-4">
+                <h3 id="dialog-name"
+                    class="text-lg font-bold text-white font-adult"></h3>
+
+                <hr class="my-2 border-green-500/30">
+
+                <p id="dialog-status"
+                    class="text-sm font-adult"></p>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </dialog>
+
+
+</body>
+
+<script src="script.js"></script>
+
+</html>
