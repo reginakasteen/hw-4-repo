@@ -1,6 +1,5 @@
 const app = document.getElementById('app');
 const intro = document.getElementById('intro-block');
-
 const button = document.getElementById('display-btn');
 
 intro.hidden = false;
@@ -8,6 +7,13 @@ intro.hidden = false;
 let currentPage = 1;
 let nextPageUrl = null;
 let isLoading = false;
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 200 &&
+        nextPageUrl && !isLoading) {
+        renderPage(nextPageUrl);    
+    }
+});
 
 function renderPage(url) {
     if (!url || isLoading) return;
@@ -75,28 +81,6 @@ function renderPage(url) {
 }
 
 
-button.addEventListener('click', () => {
-    button.remove();
-    app.innerText = "Loading...";
-    intro.hidden = true;
-
-renderPage(`https://rickandmortyapi.com/api/character?page=${currentPage}`);
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 200 &&
-        nextPageUrl &&
-        !isLoading) {
-        renderPage(nextPageUrl);    
-    }
-});
-
-app.addEventListener("click", (event) => {
-    const card = event.target.closest('[data-id]');
-    if (!card) return;
-
-    getCharacter(`https://rickandmortyapi.com/api/character/${card.dataset.id}`);
-})
-
 const dialog = document.getElementById('dialog');
 const dialogImg = document.getElementById('dialog-image');
 const dialogName = document.getElementById('dialog-name');
@@ -125,20 +109,37 @@ function getCharacter(url) {
             dialogName.textContent = item.name;
             dialogStatus.innerHTML = `<i class="${icon} pe-2"></i>${item.status}`;
             dialogStatus.className = `text-sm font-adult ${statusColor}`;
-
+            
             dialog.showModal();
-        });
+    });
 }
 
-closeDialogBtn.addEventListener('click', () => {
-    dialog.close();
-});
+document.addEventListener("click", (event) => {
 
-dialog.addEventListener('click', (e) => {
-    if (e.target === dialog) {
+    if (event.target.id === "display-btn") {
+        event.target.remove();
+        app.innerText = "Loading...";
+        intro.hidden = true;
+
+        renderPage(`https://rickandmortyapi.com/api/character?page=${currentPage}`);
+        return;
+    }
+
+    const card = event.target.closest("[data-id]");
+    if (card) {
+        getCharacter(
+          `https://rickandmortyapi.com/api/character/${card.dataset.id}`
+        );
+        return;
+    }
+
+    const closeBtn = event.target.closest("#close-dialog");
+    if (closeBtn) {
+        dialog.close();
+        return;
+    }
+
+    if (event.target === dialog) {
         dialog.close();
     }
-});
-
-
 });
